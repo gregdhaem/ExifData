@@ -15,12 +15,16 @@ def getMetaData(imgname, out=''):
         metaData = {}
         # Oprening image with Python Image Library (PIL)
         imgFile = Image.open(imgname)
-        print("NOTE: Getting Meta Data from '{}'...".format(imgname))
+        print(
+            "NOTE: Getting Meta Data from '{}'..."
+            .format(imgname))
         # Extracting EXIF information
         info = imgFile._getexif()
         # If EXIF data found
         if info:
-            print("NOTE: Found Meta Data for '{}'!".format(imgname))
+            print(
+                "NOTE: Found Meta Data for '{}'!"
+                .format(imgname))
 
             for (tag, value) in info.items():
                 tagname = TAGS.get(tag, tag)
@@ -37,7 +41,9 @@ def getMetaData(imgname, out=''):
             else:
                 outfile = out
 
-            print("NOTE: Outputting EXIF Data to file '{}'".format(outfile))
+            print(
+                "NOTE: Outputting EXIF Data to file '{}'"
+                .format(outfile))
             # Opening output EXIF Data file
             with open(outfile, "w") as f:
                 for (tagname, value) in metaData.items():
@@ -60,19 +66,25 @@ def getMetaData(imgname, out=''):
                     lat = -lat
                 if lonref == 'W':
                     lon = -lon
-                gpsfile = "{}_GPSData.txt".format(
-                    (str(imgname)).strip('.jpg'))
 
                 # Ouputting GPS data to GPS File
+                gpsfile = "{}_GPSData.txt".format(
+                    (str(imgname)).strip('.jpg'))
                 print(
-                    "NOTE: Outputting GPS Data to file '{}'".format(gpsfile))
+                    "NOTE: Outputting GPS Data to file '{}'"
+                    .format(gpsfile))
                 with open(gpsfile, "w") as f:
                     f.write("{}, {}".format(lat, lon))
 
-                # Date Time the image was taken
+                # Outputing Date Time the image was captured to DATE File
+                datefile = "{}_CaptureDate.txt".format(
+                    (str(imgname)).strip('.jpg'))
                 date = metaData['DateTimeOriginal']
                 print(
-                    "NOTE: '{}' Capture date: {}".format(imgname, date))
+                    "NOTE: Outputting Capture Date to file '{}'"
+                    .format(datefile))
+                with open(datefile, "w") as f:
+                    f.write(date)
         # No EXIF data in image
         else:
             print(
