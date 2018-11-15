@@ -52,7 +52,7 @@ def getMetaData(imgname, out=''):
                     f.write(str(tagname)+"\t" +
                             str(value)+"\n")
 
-                # Gatehring GPS Information
+                # Gathering GPS Information
                 lat = [float(x)/float(y)
                        for x, y in metaData['GPSInfo'][2]]
                 latref = metaData['GPSInfo'][1]
@@ -67,12 +67,9 @@ def getMetaData(imgname, out=''):
                     lat = -lat
                 if lonref == 'W':
                     lon = -lon
-                
+                # Getting address from coordinates
                 geolocator = Nominatim(user_agent="OpenMapQuest")
                 location = geolocator.reverse("{}, {}".format(lat, lon))
-
-                print(location.address)
-                print(location.address)
 
                 # Ouputting GPS data to GPS File
                 gpsfile = "{}_GPSData.txt".format(
@@ -88,17 +85,17 @@ def getMetaData(imgname, out=''):
                     (str(imgname)).strip('.jpg'))
                 date = metaData['DateTimeOriginal']
                 print(
-                    "NOTE: Outputting Capture Date to file '{}'"
+                    "NOTE: Outputting Capture Date to file '{}'\n"
                     .format(datefile))
                 with open(datefile, "w") as f:
                     f.write(date)
         # No EXIF data in image
         else:
             print(
-                "WARNING: No EXIF information found")
+                "WARNING: No EXIF information found\n")
     except:
         print(
-            "ERROR: Failed to process '{}'".format(imgname))
+            "ERROR: Failed to process '{}'\n".format(imgname))
 
 
 def Main():
