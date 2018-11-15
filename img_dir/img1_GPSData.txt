@@ -1,1 +1,2 @@
 48.87212399800619, 2.3423169962565105
+16, Passage Jouffroy, Fg-Montmartre, 9e, Paris, Île-de-France, France métropolitaine, 75009, France

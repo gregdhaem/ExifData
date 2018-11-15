@@ -6,6 +6,7 @@ import re
 import os.path
 from PIL import Image
 from PIL.ExifTags import TAGS
+from geopy.geocoders import Nominatim
 
 
 # Gathering EXIF Data from image file and outputing result in text file
@@ -66,6 +67,12 @@ def getMetaData(imgname, out=''):
                     lat = -lat
                 if lonref == 'W':
                     lon = -lon
+                
+                geolocator = Nominatim(user_agent="OpenMapQuest")
+                location = geolocator.reverse("{}, {}".format(lat, lon))
+
+                print(location.address)
+                print(location.address)
 
                 # Ouputting GPS data to GPS File
                 gpsfile = "{}_GPSData.txt".format(
@@ -74,7 +81,7 @@ def getMetaData(imgname, out=''):
                     "NOTE: Outputting GPS Data to file '{}'"
                     .format(gpsfile))
                 with open(gpsfile, "w") as f:
-                    f.write("{}, {}".format(lat, lon))
+                    f.write("{}, {}\n{}".format(lat, lon, location.address))
 
                 # Outputing Date Time the image was captured to DATE File
                 datefile = "{}_CaptureDate.txt".format(
